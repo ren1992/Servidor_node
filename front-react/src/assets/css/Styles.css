@@ -1,0 +1,620 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: "Anek Malayalam", sans-serif;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+li {
+  list-style: none;
+}
+body {
+  background-color: #eee;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+  display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+  display: none;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+  display: block;
+}
+
+.side-menu {
+  position: fixed;
+  background: #000;
+  width: 100%;
+  height: 300px;
+  box-sizing: border-box;
+  padding: 30px 20px;
+  transition: width 0.2s ease-in;
+  z-index: 1;
+}
+
+.side-menu.inactive {
+  width: 100%;
+  height: 40px;
+}
+
+.side-menu .top-section {
+  position: relative;
+}
+
+.side-menu .top-section .logo {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  display: inline-block;
+}
+.side-menu .top-section .logo img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.side-menu .top-section .toggle-menu-btn {
+  color: #666;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.side-menu.inactive .top-section .toggle-menu-btn {
+  right: -50px;
+}
+
+.side-menu .search-controller {
+  color: #fff;
+  position: relative;
+}
+
+.side-menu .search-controller .search-btn {
+  width: 40px;
+  height: 35px;
+  position: absolute;
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  color: #666;
+}
+
+.side-menu .search-controller input[type="text"] {
+  border: 0;
+  outline: none;
+  height: 35px;
+  background: rgb(240, 237, 237);
+  border-radius: 5px;
+  display: block;
+  margin: 20px 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 40px;
+  color: #666;
+}
+
+.side-menu .main-menu .menu-item {
+  color: rgb(240, 237, 237);
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.side-menu .main-menu .menu-item.active {
+  background: rgb(240, 237, 237);
+  border-radius: 5px;
+  color: #fff;
+}
+
+.side-menu .main-menu {
+  margin: 5px -30px;
+  position: relative;
+  max-height: 250px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.side-menu .main-menu .menu-item .menu-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.side-menu .main-menu .menu-item span {
+  position: absolute;
+  display: inline-block;
+  line-height: 40px;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.side-menu.inactive .main-menu .menu-item span {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.side-menu .main-menu .sub-menu {
+  color: rgb(240, 237, 237);
+  margin-left: 20px;
+  border-left: 1px solid #666;
+  box-sizing: border-box;
+  padding-left: 30px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-in;
+}
+
+.side-menu .main-menu .sub-menu.active {
+  max-height: 200px;
+}
+
+.side-menu .main-menu .sub-menu a {
+  display: block;
+  margin: 5px 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgb(240, 237, 237);
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.side-menu .main-menu .sub-menu a.active {
+  /* change in background, not recorded in video */
+  background: #222;
+  display: block;
+
+  border-radius: 5px;
+  color: #fff;
+}
+
+.side-menu-footer {
+  width: 100%;
+  background: #333;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.side-menu-footer .avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
+}
+.side-menu-footer .avatar img {
+  max-width: 100%;
+}
+
+.side-menu-footer .user-info {
+  display: inline-block;
+  margin: 0 10px;
+  color: #fff;
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.side-menu.inactive .side-menu-footer .user-info {
+  opacity: 1;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.side-menu-footer .user-info h5 {
+  font-size: 15px;
+}
+
+.side-menu-footer .user-info p {
+  font-size: 14px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  border-radius: 1px;
+  background: rgb(240, 237, 237);
+}
+
+.container {
+  margin-left: 300px;
+  transition: margin-left 0.2s ease-in;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.container.inactive {
+  margin-left: 80px;
+}
+
+.logo {
+  width: auto;
+  height: 30px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.logoOpen{
+    width: auto;
+  height: 60px;
+  
+  
+}
+
+#a {
+  color: #000;
+}
+.item {
+  color: white;
+}
+.avatar {
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.usuario {
+  width: 50px;
+  height: 50px;
+  margin-left: 3rem;
+}
+.dropdown_user {
+  background-color: #3d3df1;
+}
+/**
+Principal
+*/
+
+.home-fondo {
+  object-fit: cover;
+  width: 100%;
+  height: 92%;
+  position: absolute;
+  z-index: -1;
+  flex: 1;
+}
+.card-p {
+  border-radius: 5%;
+  background: transparent;
+  overflow: hidden;
+  height: 255px;
+  width: 500px;
+  margin-left: 13rem;
+}
+.card-principal {
+  background: #000;
+  opacity: 0.9;
+  color: #fff;
+}
+.card-cuerpo {
+  background: rgba(0, 0, 0, 0.527);
+ 
+  color: #fff;
+  
+}
+
+.titulo-principal {
+  opacity: 1;
+  color: #fff;
+  font-family: 'PT Sans', sans-serif;
+  letter-spacing: .025em;
+  font-style: italic;
+}
+.fondoGestion {
+  width: 40%;
+}
+.minh-100 {
+  height: 90vh;
+}
+
+.imagesPrincipal {
+
+
+  height: 87%;
+
+}
+
+.card-carousel {
+  display: flex;
+  justify-content: center;
+  border-radius: 5%;
+  height: 600px;
+  width: 580px;
+  cursor: pointer;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+justify-items: center;
+  text-align : center;
+  
+}
+
+.card-headC{
+    background: rgba(0, 0, 0, 0.5);
+    height: 420px;
+    text-align : center;
+    justify-content: center
+}
+.btn-comienza{
+    height: 50px;
+}
+.btn-comienza:hover{
+    transform: translateY(-10%);
+}
+.carousel-principal{
+    margin-left: -5rem;
+  
+}
+.texto-principal{
+    font-family: 'PT Sans', sans-serif;
+   
+}
+.subtitulo-principal{
+    font-family: 'PT Sans', sans-serif;
+    color: #000;
+    font-style: italic;
+    margin-right: 22rem;
+}
+
+.titulo-carousel{
+    opacity: 1;
+    color: #fff;
+    font-family: 'PT Sans', sans-serif;
+    font-style: italic;
+    margin-right: 25rem;
+}
+.descripcion-carousel{
+    opacity: 1;
+    color: #fff;
+    font-family: 'PT Sans', sans-serif;
+    width: 500px;
+   
+}
+
+.card-carousel-p {
+   
+    background: rgba(0, 0, 0, 0.527);
+ 
+    color: #fff;
+
+
+
+  }
+/* square buttons */
+.rec.rec-arrow {
+    border-radius: 5;
+    background: rgb(180, 5, 5);
+}
+/* round buttons on hover */
+.rec.rec-arrow:hover {
+    border-radius: 50%;
+    background: rgb(180, 5, 5);
+}
+/* hide disabled buttons */
+.rec.rec-arrow:disabled {
+    visibility: hidden;
+}
+/* disable default outline on focused items */
+/* add custom outline on focused items */
+.rec-carousel-item:focus {
+    outline: none;
+    box-shadow: inset 0 0 1px 1px lightgrey;
+}
+.card-login{
+    border-radius: 5%;
+    height: 600px;
+    width: 560px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.527);
+    color: #fff;
+    margin-left: 30%;
+    margin-top: 5%;
+}
+.login{
+    height: 200px;
+}
+.image{
+
+  
+
+  width: 20px;
+  
+}
+/**
+Gestion Restaurante
+*/
+
+.card-gestion{
+  background: rgba(0, 0, 0, 0.527);
+  color: #fff;
+  width: 50%;
+  height: 30rem;
+  margin-left: 20%;
+}
+.titulo-gestion{
+  font-family: 'PT Sans', sans-serif;
+    font-style: italic;
+    
+}
+                 
+.subtitulo-gestion{
+  font-family: 'PT Sans', sans-serif;
+  margin-left: 1.5rem ;
+  margin-top: 5rem;
+}
+
+.input-restaurante{
+  margin-top: 1.5rem;
+}
+
+.btn-siguiente{
+  width: 150%;
+
+}
+
+.resgistro-restaurante{
+  width: 70%;
+}
+
+
+/**
+Sidebar
+*/
+
+.sidebar{
+  width: 20rem;
+  height: 56rem;
+  background: #222;
+  color: #fff;
+  overflow: hidden;
+  margin-left: -2rem;
+  display: flex;
+}
+
+.titulo-uno-sidebar{
+  font-family: 'PT Sans', sans-serif;
+  font-style: italic;
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+.row-restaurantes-sidebar{
+  margin-top: 2rem;
+}
+
+.restaurante-true{
+  background: rgb(15, 15, 15);
+  width: 115%;
+  height: 5rem;
+}
+
+.card-gestion-funcionalidades{
+  border-radius: 7%;
+  height: 350px;
+  width: 230px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.527);
+  color: #fff;
+  margin-left: 30%;
+  margin-top: 5%;
+}
+
+.card-gestion-funcionalidades:hover{
+  transform: scale(1.03);
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+
+}
+.fondoMesas{
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.527);
+}
+.card-informacion{
+  background: rgba(0, 0, 0, 0.527);
+}
+.card-head-gestion{
+  height: 70%;
+}
+.titulo-card-gestion{
+  font-family: 'PT Sans', sans-serif;
+  font-style: italic;
+  color: #fff;
+}
+
+.fondoMenu{
+  width: 160%;
+  height: 100%;
+}
+.fondoNomina{
+  width: 180%;
+  height: 100%;
+}
+
+.fondoServicioMesa{
+  width: 120%;
+  height: 100%;
+}
+.fondoVentas{
+  width: 160%;
+  height: 90%;
+}
+
+.fondoInventario{
+  width: 110%;
+  height: 100%; 
+}
+.titulo-bienvenida{
+  font-family: 'PT Sans', sans-serif;
+  font-style: italic;
+  color: #fff;
+}
+
+.subtitulo-bienvenida{
+  font-family: 'PT Sans', sans-serif;
+  color: #fff;
+}
+
+.fondo-control-panel{
+  background: rgba(0, 0, 0, 0.527);
+}
+
+.controlPanel{
+  width: 70%;
+}
+/*
+ModalAgregarMesas
+*/
+.titulo-modal-agregar{
+  font-family: 'PT Sans', sans-serif;
+  font-style: italic;
+}
+
+.subtitulo-modal-agregar{
+  font-family: 'PT Sans', sans-serif;
+}
+
+/*
+Navbar
+*/
+
+
+
+.container-login{
+  background: rgba(43, 43, 43, 0.932);
+}
