@@ -74,10 +74,10 @@ export const Navbar = () => {
    * @param {*} nickUsuario
    * @param {*} contrasenaUsuario
    */
-  const consultarUsuario = async (nickUsuario, contrasenaUsuario) => {
-    await axios
-      .get(
-        "http://localhost:8000/usuario/login/" +
+  const consultarUsuario = async (nickUsuario, contrasenaUsuario) => 
+  {
+    await axios.get(
+        "http://localhost:8000/usuario/login/"+
           nickUsuario +
           "/" +
           contrasenaUsuario

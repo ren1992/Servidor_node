@@ -3,6 +3,7 @@ import {DataTypes} from "sequelize";
 
 const MenuModelo=sequelize.define('menu', {
     idmenu: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true

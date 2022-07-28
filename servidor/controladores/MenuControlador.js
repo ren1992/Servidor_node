@@ -47,6 +47,7 @@ export const getMenu=async(req,res)=>
 
 export const createMenu=async(req,res)=>
 {
+    console.log(req.body);
     MenuModelo.create(req.body).then(Menu =>
     {   
         res.json(
@@ -66,7 +67,7 @@ export const updateMenu=async(req,res)=>
     {   
         where:
         {
-            idMenu: req.params.idMenu
+            idmenu: req.params.idmenu
         }
     }).then(Menu =>
     {   

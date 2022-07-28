@@ -3,6 +3,7 @@
 ==========================================================*/
 import MesaModelo from "../modelos/MesaModelo.js";
 import OrdenModelo from "../modelos/OrdenModelo.js";
+import FacturaModelo from "../modelos/FacturaModelo.js";
 import TarifaModelo from "../modelos/TarifaModelo.js";
 import { Op, Sequelize } from "sequelize";
 
@@ -17,6 +18,16 @@ import { Op, Sequelize } from "sequelize";
          targetKey:'idorden'
      }
  );
+
+ MesaModelo.hasOne
+ (
+     FacturaModelo,
+     {
+         foreignKey:'mesa_idmesa', 
+         targetKey:'idmesa'
+     }
+ );
+
 /*==========================================================
  ********************Consultas básicas********************** 
  ==========================================================*/
@@ -69,13 +80,13 @@ export const updateMesa=async(req,res)=>
     {   
         where:
         {
-            idMesa: req.params.idMesa
+            idmesa: req.params.idmesa
         }
     }).then(mesa =>
     {   
         res.json(
         {
-            "message":"Mesa actualizado"
+            "message":"Mesa actualizada"
         });
     }).catch(error =>
     {
@@ -186,13 +197,29 @@ export const getAllMesaRestaurante=async(req,res)=>
         [
             {
                 model:OrdenModelo,
+                where:
+                {
+                    estado: 'Pagado'
+                },
                 attributes:[]
+            },
+            {
+                model:FacturaModelo,
+                attributes:
+                [
+                ]      
             }
         ],
         attributes:
         [
-            'idmesa', 'numero',[ Sequelize.col('estado'), 'estado']
-        ] 
+            'idmesa', 
+            'numero',
+            [ Sequelize.col('orden.estado'), 'estado_orden'],
+            [ Sequelize.col('mesa.estado'), 'estado_mesa'],
+            [ Sequelize.col('factura.estado'), 'factura_mesa'],
+            [Sequelize.fn('max', Sequelize.col('idfactura')), 'ifactura']
+        ],
+        group:'idmesa' 
     }).then(mesa =>
     {   
         res.json(mesa);

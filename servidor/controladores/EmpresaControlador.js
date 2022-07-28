@@ -7,16 +7,26 @@ import MenuModelo from "../modelos/MenuModelo.js";
 import RestauranteModelo from "../modelos/RestauranteModelo.js";
 import MesaModelo from "../modelos/MesaModelo.js";
 import EmpleadoModelo from "../modelos/EmpleadoModelo.js";
+import OrdenModelo from "../modelos/OrdenModelo.js";
 import { Op, Sequelize } from "sequelize";
 /*==========================================================
  ***********************Relaciones************************** 
 ==========================================================*/
 EmpresaModelo.hasMany
 (
-    RestauranteModelo,
+    OrdenModelo,
     {
         foreignKey:'empresa_idempresa', 
         targetKey:'idempresa'
+    }
+);
+
+OrdenModelo.hasMany
+(
+    RestauranteModelo,
+    {
+        foreignKey:'orden_idorden', 
+        targetKey:'idorden'
     }
 );
 
@@ -157,37 +167,49 @@ export const consultarDatoEmpresa=async(req,res)=>
         include: 
         [
             {
-                model:RestauranteModelo,
+                model:OrdenModelo,
+                where: 
+                {  
+                    estado: 'Pagado' ,
+                   // tarifa_idtarifa: 4                            
+                },
                 include: 
                 [
                     {
-                        model:NominaModelo,
-                        include:
+                        model:RestauranteModelo,
+                        include: 
                         [
                             {
-                                model:EmpleadoModelo
-                            }
+                                model:NominaModelo,
+                                include:
+                                [
+                                    {
+                                        model:EmpleadoModelo
+                                    }
+                                ],
+                                attributes:[]                                     
+                            },
+                            {
+                                model:MesaModelo,
+                                attributes:[]           
+                            },
+                            {
+                                model:MenuModelo,
+                                attributes:[]                           
+                            }                     
                         ],
-                        attributes:[]                                     
-                    },
-                    {
-                        model:MesaModelo,
-                        attributes:[]           
-                    },
-                    {
-                        model:MenuModelo,
-                        attributes:[]                           
-                    }                    
-                ],
-                attributes:
-                [
-                    'idrestaurante',
-                    'nombre',
-                    'direccion',
-                    [Sequelize.fn('COALESCE',Sequelize.col('idmenu'),0,Sequelize.fn('count', Sequelize.col('idmenu'))), 'platos'],
-                    [Sequelize.fn('COALESCE',Sequelize.col('idmesa'),0,Sequelize.fn('count', Sequelize.col('idmesa'))), 'mesas'],
-                    [Sequelize.fn('COALESCE',Sequelize.col('idempleado'),0,Sequelize.fn('count', Sequelize.col('idempleado'))), 'empleados']
-                ]              
+                        attributes:
+                        [
+                            'idrestaurante',
+                            'nombre',
+                            'direccion',
+                            [Sequelize.fn('COALESCE',Sequelize.col('idmenu'),0,Sequelize.fn('count', Sequelize.col('idmenu'))), 'platos'],
+                            [Sequelize.fn('COALESCE',Sequelize.col('idmesa'),0,Sequelize.fn('count', Sequelize.col('idmesa'))), 'mesas'],
+                            [Sequelize.fn('COALESCE',Sequelize.col('idempleado'),0,Sequelize.fn('count', Sequelize.col('idempleado'))), 'empleados']
+                        ]              
+                    }
+                ] ,
+                attributes:['estado']             
             }            
         ],
         attributes:['nombre'], 

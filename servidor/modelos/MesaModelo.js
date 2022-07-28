@@ -1,7 +1,7 @@
 import sequelize from "../mundo/DataBase.js";
 import {DataTypes} from "sequelize";
 
-const MesaModelo= sequelize.define('mesa', {
+const MesaModelo=sequelize.define('mesa', {
   idmesa: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
@@ -12,6 +12,10 @@ const MesaModelo= sequelize.define('mesa', {
     type: DataTypes.STRING(45),
     allowNull: true,
     defaultValue: "Mesa x"
+  },
+  estado: {
+    type: DataTypes.ENUM('Ocupada','Desocupada'),
+    allowNull: true
   },
   restaurante_idrestaurante: {
     type: DataTypes.INTEGER,

@@ -4,6 +4,7 @@ import EmpleadoModelo from "../modelos/EmpleadoModelo.js";
 import MenuModelo from "../modelos/MenuModelo.js";
 import PlatoModelo from "../modelos/PlatoModelo.js";
 import PedidosModelo from "../modelos/PedidoModelo.js";
+import { Op, Sequelize } from "sequelize";
 
 /*==========================================================
  ***********************Relaciones************************** 
@@ -17,12 +18,13 @@ FacturaModelo.belongsTo
     }
 );
 EmpleadoModelo.belongsTo(UsuarioModelo,{foreignKey:'usuario_idusuario', targetKey:'idusuario'});
-
 FacturaModelo.hasMany(PedidosModelo,{foreignKey:'factura_idfactura', targetKey:'idfactura'});
 PedidosModelo.belongsTo(MenuModelo,{foreignKey:'menu_idmenu', targetKey:'idmenu'});
 MenuModelo.belongsTo(PlatoModelo,{foreignKey:'plato_idplato', targetKey:'idplato'});
 
-//Consultas
+/*==========================================================
+ *******************Consultas basicas****************** 
+ ==========================================================*/
 export const getAllFactura=async(req,res)=>
 {
     FacturaModelo.findAll
@@ -85,6 +87,7 @@ export const getFactura=async(req,res)=>
 
 export const createFactura=async(req,res)=>
 {
+    console.log(req.body);
     FacturaModelo.create(req.body).then(factura =>
     {   
         res.json(
@@ -130,10 +133,63 @@ export const deleteFactura=async(req,res)=>
     {   
         res.json(
         {
-            "message":"Cliente actualizado"
+            "message":"Factura eliminada"
         });
     }).catch(error =>
     {
         res.json({message: error.message});
     });
 }
+/*==========================================================
+ *******************Consultas relacionadas****************** 
+ ==========================================================*/
+ export const getConsultaPedidoFactura=async(req,res)=>
+{
+    FacturaModelo.findAll
+    (
+        {
+            where:
+            {
+                idfactura: req.params.idfactura
+            },
+            include:
+            [
+                {
+                    model:PedidosModelo,                   
+                    include: 
+                    [
+                        {
+                            model:MenuModelo,
+                            include: 
+                            [
+                                {
+                                    model:PlatoModelo
+                                }
+                            ],
+                            attributes:
+                            [
+                                'idmenu'
+                            ]
+                        }
+                    ],
+                    attributes:
+                    [
+                        "idpedido",
+                        "observacion" ,
+                        "cantidad",
+                        "precio_pagado",
+                        "estado"
+                    ]
+                }
+            ], 
+            attributes:['idfactura']
+            
+        }
+    ).then(factura =>
+    {   
+        res.json(factura);
+    }).catch(error =>
+    {
+        res.json({message: error.message});
+    });
+} 

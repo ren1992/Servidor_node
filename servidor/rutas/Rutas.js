@@ -1,4 +1,6 @@
 import express  from "express";
+import {uploadPlato, uploadUsuario} from "../configuracion/Multer.js";
+
 import 
 { 
     getAllCliente,
@@ -42,7 +44,8 @@ import
     getFactura,
     createFactura,
     updateFactura ,
-    deleteFactura 
+    deleteFactura ,
+    getConsultaPedidoFactura
 } from "../controladores/FacturaControlador.js";
 
 import 
@@ -206,6 +209,8 @@ router.get('/factura/:idfactura',getFactura);
 router.post('/factura/',createFactura);
 router.put('/factura/:idfactura',updateFactura);
 router.delete('/factura/:idfactura',deleteFactura);
+router.get('/factura/consultaPedidosFactura/:idfactura',getConsultaPedidoFactura);
+
 
 router.get('/gerente/',getAllGerente);
 router.get('/gerente/:idgerente',getGerente);
@@ -239,7 +244,7 @@ router.put('/mesa/:idmesa',updateMesa);
 router.delete('/mesa/:idmesa',deleteMesa);
 router.get('/mesa/mesaPagada/:idrestaurtante',getContarMesaPagada);
 router.get('/mesa/mesaNoPagada/:idrestaurtante',getContarMesaNoPagada);
-router.get('/mesa/mesaResturante/:idrestaurtante',getAllMesaRestaurante);
+router.get('/mesa/consultaMesaResturante/:idrestaurtante',getAllMesaRestaurante);
 router.post('/mesa/mesaCompra/:idempresa/:idrestaurtante/:cantidad',createCompraMesa);
 
 
@@ -257,7 +262,7 @@ router.delete('/pedido/:idpedido',deletePedido);
 
 router.get('/plato/',getAllPlato);
 router.get('/plato/:idplato',getPlato);
-router.post('/plato/',createPlato);
+router.post('/plato/',uploadPlato.single('file'),createPlato);
 router.put('/plato/:idplato',updatePlato);
 router.delete('/plato/:idplato',deletePlato);
 router.get('/plato/buscarPlatoEmpresa/:nombre/:idempresa',getBuscarPlatoEmpresa);
@@ -285,7 +290,7 @@ router.delete('/turno/:idturno',deleteTurno);
 
 router.get('/usuario/',getAllUsuario);
 router.get('/usuario/:idUsuario',getUsuario);
-router.post('/usuario/',createUsuario);
+router.post('/usuario/',uploadUsuario.single('file'),createUsuario);
 router.put('/usuario/:idUsuario',updateUsuario);
 router.delete('/usuario/:idUsuario',deleteUsuario);
 router.get('/usuario/login/:nickCorreo/:contrasena',buscarUsuario);
