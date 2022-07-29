@@ -144,7 +144,8 @@ import
     getRestaurante,
     createRestaurante,
     updateRestaurante ,
-    deleteRestaurante     
+    deleteRestaurante ,
+    createCompraRestaurante    
 } from "../controladores/RestauranteControlador.js";
 
 import 
@@ -248,7 +249,6 @@ router.get('/mesa/mesaNoPagada/:idrestaurtante',getContarMesaNoPagada);
 router.get('/mesa/consultaMesaResturante/:idrestaurtante',getAllMesaRestaurante);
 router.post('/mesa/mesaCompra/:idempresa/:idrestaurtante/:cantidad',createCompraMesa);
 
-
 router.get('/nomina/',getAllNomina);
 router.get('/nomina/:idnomina',getNomina);
 router.post('/nomina/',createNomina);
@@ -281,6 +281,7 @@ router.get('/restaurante/:idrestaurante',getRestaurante);
 router.post('/restaurante/',createRestaurante);
 router.put('/restaurante/:idrestaurante',updateRestaurante);
 router.delete('/restaurante/:idrestaurante',deleteRestaurante);
+router.post('/mesa/restauranteCompra/:idempresa/:cantidad',createCompraRestaurante);
 
 router.get('/turno/',getAllTurno);
 router.get('/turno/:idturno',getTurno);
