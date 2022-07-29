@@ -102,7 +102,7 @@ export const deletePedido=async(req,res)=>
     (        
         req.body.pedidos,
         {
-            updateOnDuplicate: ["precio_pagado", "estado"],
+            updateOnDuplicate: ["precio_pagado", "estado"]
         }
     ).then(pedido =>
     {   
