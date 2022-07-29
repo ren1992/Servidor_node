@@ -1,6 +1,9 @@
 import PlatoModelo from "../modelos/PlatoModelo.js";
 import OrdenModelo from "../modelos/OrdenModelo.js";
 import { Op, Sequelize } from "sequelize";
+import sharp from "sharp";
+import fs from "fs";
+import { createECDH } from "crypto";
  
 /*==========================================================
  ***********************Relaciones************************** 
@@ -43,10 +46,30 @@ export const getPlato=async(req,res)=>
         res.json({message: error.message});
     });
 } 
+const cargarImagen=async(file)=>
+{
+    if (file) 
+    {
+        const {path,originalname} = file;
+        const ref = `${originalname.split('.')[0]}-${Date.now() }.webp`; 
+        await sharp(path)
+        .webp({ quality: 20 })
+        .toFile(`./uploads/imagen/plato/${ref}`);
+        fs.unlinkSync(file.path);
+        return ref;
+    } else {
+        return "";
+    }
+} 
 
 export const createPlato=async(req,res)=>
-{
-    PlatoModelo.create(req.body).then(Plato =>
+{  
+    let ref=await cargarImagen(req.file);
+    if (ref) 
+    {
+        req.body.imagen = `http://localhost:8000/${ref}`;   
+    } 
+    await PlatoModelo.create(req.body).then(plato =>
     {   
         res.json(
         {
@@ -60,23 +83,33 @@ export const createPlato=async(req,res)=>
 
 export const updatePlato=async(req,res)=>
 {
-    PlatoModelo.update(
-    req.body, 
-    {   
-        where:
-        {
-            idPlato: req.params.idPlato
-        }
-    }).then(Plato =>
-    {   
-        res.json(
-        {
-            "message":"Plato actualizado"
-        });
-    }).catch(error =>
+    let ref=cargarImagen(req.file);
+    if (ref) 
     {
-        res.json({message: error.message});
-    });
+        console.log("hola mundo");
+        req.body.imagen = `http://localhost:8000/${ref}`;   
+    } 
+    PlatoModelo.update
+    (
+        req.body, 
+        {   
+            where:
+            {
+                idPlato: req.params.idPlato
+            }
+        }).then(plato =>
+        {   
+            res.json
+            (
+                {
+                    "message":"Plato actualizado"
+                }
+            );
+        }).catch(error =>
+        {
+            res.json({message: error.message});
+        }
+    );
 } 
 
 export const deletePlato=async(req,res)=>

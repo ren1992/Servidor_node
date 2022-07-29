@@ -114,7 +114,8 @@ import
     getPedido,
     createPedido,
     updatePedido ,
-    deletePedido 
+    deletePedido,
+    pagarPedido 
 } from "../controladores/PedidoControlador.js";
 
 import 
@@ -259,16 +260,15 @@ router.get('/pedido/:idpedido',getPedido);
 router.post('/pedido/',createPedido);
 router.put('/pedido/:idpedido',updatePedido);
 router.delete('/pedido/:idpedido',deletePedido);
+router.post('/pedido/pagarPedidos/',pagarPedido);
 
 router.get('/plato/',getAllPlato);
 router.get('/plato/:idplato',getPlato);
 router.post('/plato/',uploadPlato.single('file'),createPlato);
-router.put('/plato/:idplato',updatePlato);
+router.put('/plato/:idplato',uploadPlato.single('file'),updatePlato);
 router.delete('/plato/:idplato',deletePlato);
 router.get('/plato/buscarPlatoEmpresa/:nombre/:idempresa',getBuscarPlatoEmpresa);
 router.get('/plato/platoSinPagar/:idempresa',getContaPlatoSinPagar);
-
-
 
 router.get('/producto/',getAllProducto);
 router.get('/producto/:idproducto',getProducto);
@@ -291,7 +291,7 @@ router.delete('/turno/:idturno',deleteTurno);
 router.get('/usuario/',getAllUsuario);
 router.get('/usuario/:idUsuario',getUsuario);
 router.post('/usuario/',uploadUsuario.single('file'),createUsuario);
-router.put('/usuario/:idUsuario',updateUsuario);
+router.put('/usuario/:idUsuario',uploadUsuario.single('file'),updateUsuario);
 router.delete('/usuario/:idUsuario',deleteUsuario);
 router.get('/usuario/login/:nickCorreo/:contrasena',buscarUsuario);
 

@@ -10,32 +10,40 @@ import { useForm } from "../hooks/useForm";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import {gestionAñadirNick} from "../actions/events"
-export const Login = () => {
-   const dispatch = useDispatch();
+export const Login = () => 
+{
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const registrarUsuario=()=>{
+    const registrarUsuario=()=>
+    {
       dispatch(gestionAñadirNick(nickUsuario))
       navigate("/RegistroRestaurante")
     }
 
-    const handleGestionRestaurante=()=>{
-      nickUsuario!="" && contrasenaUsuario!="" ? 
+    const handleGestionRestaurante=()=>
+    {
+      nickUsuario!=="" && contrasenaUsuario!=="" ? 
       registrarUsuario()
       :
-      Swal.fire(
+      Swal.fire
+      (
         "Error",
         "Por favor ingrese el nick y contraseña",
         "error"
-      );
-        
+      );        
     }
-    const [values, handleInnputChange] = useForm({
-      nickUsuario: "",
-      contrasenaUsuario: "",
-    });
-    const { nickUsuario, contrasenaUsuario } = values;
-  return (
+
+    const [values, handleInnputChange] = useForm
+    (
+        {
+          nickUsuario: "",
+          contrasenaUsuario: "",
+        }
+    );
     
+    const { nickUsuario, contrasenaUsuario } = values;
+  
+    return(    
     <>
       <Navbar />
       <img src={FondoRestaurante} className="home-fondo" />

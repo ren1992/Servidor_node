@@ -4,7 +4,8 @@ import moduloDomicilios from '../assets/img/moduloDomicilio.png'
 import moduloVentas from '../assets/img/moduloVentas.png'
 import moduloInventario from '../assets/img/moduloInventario.png'
 
-export const imgPrincipal =[
+export const imgPrincipal =
+[
     {
         id:'1',
         title:'Modulo Menú',

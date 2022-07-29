@@ -24,11 +24,11 @@ export const getPedido=async(req,res)=>
     {
         where:
         {
-            idPedido: req.params.idPedido
+            idpedido: req.params.idpedido
         }
-    }).then(Pedido =>
+    }).then(pedido =>
     {   
-        res.json(Pedidos);
+        res.json(pedido);
     }).catch(error =>
     {
         res.json({message: error.message});
@@ -51,23 +51,25 @@ export const createPedido=async(req,res)=>
 
 export const updatePedido=async(req,res)=>
 {
-    PedidoModelo.update(
-    req.body, 
-    {   
-        where:
+    PedidoModelo.update
+    (
+        req.body, 
+        {   
+            where:
+            {
+                idpedido: req.params.idpedido
+            }
+        }).then(pedido =>
+        {   
+            res.json(
+            {
+                "message":"Pedido actualizado"
+            });
+        }).catch(error =>
         {
-            idPedido: req.params.idPedido
+            res.json({message: error.message});
         }
-    }).then(Pedido =>
-    {   
-        res.json(
-        {
-            "message":"Pedido actualizado"
-        });
-    }).catch(error =>
-    {
-        res.json({message: error.message});
-    });
+    );
 } 
 
 export const deletePedido=async(req,res)=>
@@ -76,7 +78,7 @@ export const deletePedido=async(req,res)=>
     {   
         where:
         {
-            idPedido: req.params.idPedido
+            idpedido: req.params.idpedido
         }
     }).then(Pedido =>
     {   
@@ -93,3 +95,25 @@ export const deletePedido=async(req,res)=>
 /*==========================================================
  *******************Consultas relacionadas****************** 
  ==========================================================*/
+ export const pagarPedido=async(req,res)=>
+{
+    console.log(req.body.pedidos);
+    await PedidoModelo.bulkCreate
+    (        
+        req.body.pedidos,
+        {
+            updateOnDuplicate: ["precio_pagado", "estado"],
+        }
+    ).then(pedido =>
+    {   
+        res.json
+        (
+            {
+                "message":"Pedidos pagados"
+            }
+        );
+    }).catch(error =>
+    {
+        res.json({message: error.message});
+    });
+} 

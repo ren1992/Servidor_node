@@ -6,11 +6,10 @@ const storageImagePlato = multer.diskStorage
     {
         destination: function (req, file, cb) 
         {
-            cb(null, path.join(__dirname,'../servidor/imagen/plato'))
+            cb(null, path.join(__dirname,'../servidor/uploads/imagen/plato'))
         },
         filename: function (req, file, cb) 
         {
-            console.log(file);
             cb(null, file.originalname)
         }
     }
@@ -21,7 +20,7 @@ const storageImageUsuario = multer.diskStorage
     {
         destination: function (req, file, cb) 
         {
-            cb(null, path.join(__dirname,'../servidor/imagen/plato'))
+            cb(null, path.join(__dirname,'../servidor/uploads/imagen/usuario'))
         },
         filename: function (req, file, cb) 
         {
