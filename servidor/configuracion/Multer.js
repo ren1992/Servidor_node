@@ -1,16 +1,17 @@
 import path from 'path';
 import multer from 'multer';
-
+const __dirname = path.resolve();
 const storageImagePlato = multer.diskStorage
 (
     {
         destination: function (req, file, cb) 
         {
-            cb(null, path.join(__dirname,'../imagenes/platos'))
+            cb(null, path.join(__dirname,'../servidor/imagen/plato'))
         },
         filename: function (req, file, cb) 
         {
-            cb(null, file.fieldname + '-' + Date.now())
+            console.log(file);
+            cb(null, file.originalname)
         }
     }
 )
@@ -20,15 +21,14 @@ const storageImageUsuario = multer.diskStorage
     {
         destination: function (req, file, cb) 
         {
-            cb(null, path.join(__dirname,'../imagenes/usuario'))
+            cb(null, path.join(__dirname,'../servidor/imagen/plato'))
         },
         filename: function (req, file, cb) 
         {
-            cb(null, file.fieldname + '-' + Date.now()+'.'+file.mimetype.split('/')[0])
+            cb(null, file.originalname)
         }
-  }
+   }
 )
  
- 
-  export const uploadPlato = multer({ storage: storageImagePlato })
-  export const uploadUsuario = multer({ storage: storageImageUsuario })
+export const uploadPlato = multer({ storage: storageImagePlato })
+export const uploadUsuario = multer({ storage: storageImageUsuario })
